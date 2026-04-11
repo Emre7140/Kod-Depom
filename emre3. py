@@ -1,0 +1,5 @@
+a=int(input("Bir sayı giriniz: "))
+if a%5==0 and a%3==0:
+    print("15'e Tam Bölünür")
+else:
+    print("15'e Tam Bölünmez")
