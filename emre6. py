@@ -1,0 +1,7 @@
+ad_soyad=input("Adınız-Soyadınız: ")
+ydil=input("Bildiğiniz yabancı dil: ")
+yas=int(input("Yaşınız: "))
+if ((ydil=="İngilizce" or ydil=="Fransızca") and 18<yas<40):
+    print("Sayın", ad_soyad ,"sonuç başarılı")
+else:
+    print("Sayın", ad_soyad ,"sonuç başarısız")
