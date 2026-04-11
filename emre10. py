@@ -1,0 +1,5 @@
+y=int(input("Yaşınızı Giriniz :"))
+if y>=18:
+    print("Ehliyet Alabilirsiniz")
+else:
+    print("Ehliyet Alamazsınız")
