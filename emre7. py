@@ -1,0 +1,6 @@
+ydil=input("Yabancı dil biliyor musunuz? (Evet/Hayır): ")
+op=input("Ofis programlarını biliyor musunuz? (Evet/Hayır): ")
+if ydil=="Evet" and op=="Evet":
+    print("İşe Alındınız")
+else:
+    print("İşe Alınmadınız")
