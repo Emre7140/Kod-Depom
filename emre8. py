@@ -1,0 +1,5 @@
+cb=["yazıcı","hoparlör","ekran"]
+if "ekran" in cb:
+    print("Eleman Bulundu")
+else:
+    print("Eleman Bulunmadı")
