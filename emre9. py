@@ -1,0 +1,5 @@
+g_s=int(input("Bir sayı girin:  "))
+if g_s%2==0:
+    print("Çift sayı")
+else:
+    print("Tek sayı")
