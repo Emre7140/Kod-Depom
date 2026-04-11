@@ -1,0 +1,8 @@
+a=int(input("1. sınavınızı giriniz: "))
+b=int(input("2. sınavınızı giriniz: "))
+c=int(input("Sözlü sınavı giriniz: "))
+d=(a+b+c)/3
+if d>=50:
+    print("Başarılı")
+else:
+    print("Başarısız")
