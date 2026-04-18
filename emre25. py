@@ -1,0 +1,10 @@
+kullanici = input("Kullanıcı adınızı giriniz:")
+maas = int(input("Maaşınızı giriniz: "))
+calisma_yili = int(input("Çalışma yılını giriniz: "))
+
+if calisma_yili <= 5:
+    zam_orani = %10
+elif calisma_yili <= 10:
+    zam_orani = %15
+else:
+    zam_orani = %25
