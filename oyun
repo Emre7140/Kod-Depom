@@ -1,0 +1,55 @@
+import time
+import sys
+
+def yavas_yaz(metin):
+    for harf in metin:
+        sys.stdout.write(harf)
+        sys.stdout.flush()
+        time.sleep(0.04)
+    print("\n")
+
+def oyun_baslat():
+    yavas_yaz("--- KARANLIK EMANET ---")
+    yavas_yaz("Gözlerini eski, rutubet kokan bir odada açıyorsun...")
+    yavas_yaz("Hafızan bulanık. Sadece buraya girmemen gerektiğini hatırlıyorsun.")
+    yavas_yaz("Karşında iki kapı var: Biri paslı demirden, diğeri ise çatlamış ahşaptan.")
+    
+    secim1 = input("Hangi kapıyı seçeceksin? (Demir/Ahşap): ").lower().strip()
+
+    if secim1 == "demir":
+        demir_kapi()
+    elif secim1 == "ahşap" or secim1 == "ahsap":
+        ahsap_kapi()
+    else:
+        yavas_yaz("Korkudan donup kaldın ve arkandaki gölge seni yuttu... OYUN BİTTİ.")
+
+def demir_kapi():
+    yavas_yaz("Demir kapı gıcırdayarak açılıyor. İçerisi soğuk bir mezbahayı andırıyor.")
+    yavas_yaz("Masanın üzerinde parlayan bir anahtar ve yanında eski bir not var.")
+    yavas_yaz("Notta şöyle yazıyor: 'Alırsan yaşarsın, bırakırsan yanarsın.'")
+    
+    secim2 = input("Anahtarı alacak mısın? (Evet/Hayır): ").lower().strip()
+    
+    if secim2 == "evet":
+        yavas_yaz("Anahtarı aldığın an ışıklar sönüyor! Ama anahtarın üzerindeki sembol parlamaya başlıyor.")
+        yavas_yaz("Bu ışık sayesinde gizli bir çıkış buluyorsun. KURTULDUN!")
+    else:
+        yavas_yaz("Anahtara dokunmadın. O sırada kapı üzerine kilitlendi ve oda suyla dolmaya başladı... OYUN BİTTİ.")
+
+def ahsap_kapi():
+    yavas_yaz("Ahşap kapıdan içeri süzülüyorsun. Burası kütüphaneye benziyor.")
+    yavas_yaz("Kitaplıklardan biri hafifçe aralık. Arkasında bir fısıltı duyuyorsun.")
+    yavas_yaz("Fısıltı adını söylüyor... 'Buraya gel...'")
+    
+    secim2 = input("Sese doğru gidecek misin yoksa hemen kaçacak mısın? (Git/Kaç): ").lower().strip()
+    
+    if secim2 == "git":
+        yavas_yaz("Sese doğru yaklaştın... Karanlığın içinden bir el uzandı ve seni kendine çekti.")
+        yavas_yaz("Artık kütüphanenin yeni bir parçasısın... OYUN BİTTİ.")
+    else:
+        yavas_yaz("Arkana bakmadan koşmaya başladın! Bir pencere bulup dışarı atladın.")
+        yavas_yaz("Yaralısın ama hayattasın. Başardın!")
+
+# Oyunu çalıştır
+if __name__ == "__main__":
+    oyun_baslat()
