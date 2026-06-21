@@ -1,0 +1,82 @@
+import time
+import requests
+
+# Anlık döviz fiyatlarını çeken fonksiyon
+def fiyatlari_getir():
+    try:
+        # Ücretsiz ve üyeliksiz döviz API'si
+        url = "https://api.exchangerate-api.com/v4/latest/TRY"
+        cevap = requests.get(url).json()
+        
+        # API verileri TRY tabanlı olduğu için tersini alarak 1 Yabancı Para = Kaç TL buluyoruz
+        dolar_tl = round(1 / cevap["rates"]["USD"], 2)
+        euro_tl = round(1 / cevap["rates"]["EUR"], 2)
+        
+        # Altın ons fiyatı üzerinden yaklaşık gram altın hesaplama (Örnek sabit katsayı ile)
+        # Gerçek piyasaya yakın olması için küçük bir simülasyon ekledik
+        altin_tl = round(dolar_tl * 79.5, 2) 
+        
+        return {"USD": dolar_tl, "EUR": euro_tl, "GAU": altin_tl}
+    except Exception as e:
+        print("Fiyatlar çekilirken hata oluştu, internetini kontrol et:", e)
+        return {"USD": 33.50, "EUR": 36.20, "GAU": 2500.00} # Hata durumunda varsayılan fiyatlar
+
+# Oyuncu hesap cüzdanı
+cuzdan = {
+    "TL": 10000.0,
+    "USD": 0.0,
+    "EUR": 0.0,
+    "GAU": 0.0
+}
+
+print("=== YATIRIM SİMÜLATÖRÜNE HOŞ GELDİN ===")
+print("Başlangıç Bakiyen: 10.000 TL")
+
+while True:
+    fiyatlar = fiyatlari_getir()
+    print("\n--- ANLIK PİYASA FİYATLARI ---")
+    print(f"[USD] Dolar: {fiyatlar['USD']} TL")
+    print(f"[EUR] Euro: {fiyatlar['EUR']} TL")
+    print(f"[GAU] Altın (Gr): {fiyatlar['GAU']} TL")
+    print("------------------------------")
+    print(f"CÜZDANINIZ: {cuzdan['TL']} TL | {cuzdan['USD']} USD | {cuzdan['EUR']} EUR | {cuzdan['GAU']} GAU")
+    print("------------------------------")
+    
+    secim = input("1- Satın Al | 2- Sat | 3- Fiyatları Yenile | 4- Çıkış\nSeçiminiz: ")
+    
+    if secim == "1":
+        doviz = input("Hangi türü almak istiyorsun? (USD / EUR / GAU): ").upper()
+        if doviz in fiyatlar:
+            miktar = float(input(f"Kaç adet {doviz} almak istiyorsun?: "))
+            toplam_tutar = miktar * fiyatlar[doviz]
+            
+            if cuzdan["TL"] >= toplam_tutar:
+                cuzdan["TL"] -= toplam_tutar
+                cuzdan[doviz] += miktar
+                print(f"\nBaşarılı! {miktar} {doviz} alındı.")
+            else:
+                print("\nYetersiz TL bakiyesi!")
+        else:
+            print("\nGeçersiz para birimi!")
+            
+    elif secim == "2":
+        doviz = input("Hangi türü satmak istiyorsun? (USD / EUR / GAU): ").upper()
+        if doviz in cuzdan:
+            miktar = float(input(f"Kaç adet {doviz} satmak istiyorsun?: "))
+            if cuzdan[doviz] >= miktar:
+                toplam_gelir = miktar * fiyatlar[doviz]
+                cuzdan[doviz] -= miktar
+                cuzdan["TL"] += toplam_gelir
+                print(f"\nBaşarılı! {miktar} {doviz} satıldı.")
+            else:
+                print(f"\nYetersiz {doviz} bakiyesi!")
+                
+    elif secim == "3":
+        print("\nPiyasa güncelleniyor...")
+        time.sleep(1)
+        
+    elif secim == "4":
+        print("\nSimülatör kapatılıyor. Toplam servetinle iyi günler!")
+        break
+    else:
+        print("\nGeçersiz seçim!")
