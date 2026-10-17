@@ -1,0 +1,88 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace SayiTahminOyunu
+{
+    public partial class Form1 : Form
+    {
+        int tutulanSayi;
+        int hak = 5; // 5 hak verilecek[span_3](start_span)[span_3](end_span)
+        int oncekiFark = -1;
+        Random rnd = new Random();
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // 1 ile 1000 arasında rastgele sayı seçilir[span_4](start_span)[span_4](end_span)
+            tutulanSayi = rnd.Next(1, 1001);
+            lblHak.Text = "Kalan Hak: " + hak;
+            lblMesaj.Text = "1-1000 arasında bir sayı tahmin edin.";
+        }
+
+        private void btnTahmin_Click(object sender, EventArgs e)
+        {
+            int tahmin;
+
+            // Girilen değerin sayı olup olmadığını kontrol et
+            if (!int.TryParse(txtTahmin.Text, out tahmin))
+            {
+                MessageBox.Show("Lütfen geçerli bir sayı girin!");
+                return;
+            }
+
+            // Doğru tahmin durumu
+            if (tahmin == tutulanSayi)
+            {
+                lblMesaj.Text = "Tebrikler, doğru tahmin!";
+                lblMesaj.ForeColor = Color.Green;
+                btnTahmin.Enabled = false; // Oyunu bitir
+                return;
+            }
+
+            // Yanlış tahmin durumu
+            hak--; // Her yanlış tahminde 1 azalacak[span_5](start_span)[span_5](end_span)
+            lblHak.Text = "Kalan Hak: " + hak;
+
+            if (hak == 0)
+            {
+                // Hak bittiğinde verilecek mesaj[span_6](start_span)[span_6](end_span)
+                lblMesaj.Text = "Bilemediniz! Tutulan Sayı: " + tutulanSayi;[span_7](start_span)[span_7](end_span)
+                lblMesaj.ForeColor = Color.Red;
+                btnTahmin.Enabled = false;
+            }
+            else
+            {
+                // Yaklaştın / Uzaklaştın kontrolü (2 adet Label kullanılır)[span_8](start_span)[span_8](end_span)
+                int mevcutFark = Math.Abs(tutulanSayi - tahmin);
+
+                if (oncekiFark != -1)
+                {
+                    if (mevcutFark < oncekiFark)
+                    {
+                        lblMesaj.Text = "Yaklaştın!"; // Yaklaştın uyarısı[span_9](start_span)[span_9](end_span)
+                        lblMesaj.ForeColor = Color.Blue;
+                    }
+                    else
+                    {
+                        lblMesaj.Text = "Uzaklaştın!"; // Uzaklaştın uyarısı[span_10](start_span)[span_10](end_span)
+                        lblMesaj.ForeColor = Color.Orange;
+                    }
+                }
+                else
+                {
+                    lblMesaj.Text = "Yanlış tahmin, tekrar deneyin.";
+                }
+
+                oncekiFark = mevcutFark;
+            }
+
+            txtTahmin.Clear();
+            txtTahmin.Focus();
+        }
+    }
+}
